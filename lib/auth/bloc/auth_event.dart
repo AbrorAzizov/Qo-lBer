@@ -14,8 +14,8 @@ class AuthEventSignIn extends AuthEvent{
 class AuthEventSignUp extends AuthEvent{
   final String password;
   final String email;
-
-  AuthEventSignUp({required this.password, required this.email});
+  final String name;
+  AuthEventSignUp({required this.password,required this.name, required this.email});
 }
 
 @immutable

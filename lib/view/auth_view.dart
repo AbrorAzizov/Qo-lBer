@@ -15,16 +15,17 @@ class AuthView extends StatelessWidget {
     return  BlocConsumer<AuthBloc, AuthState>(
 
         listener: (context, state) {
-          if (state.isLoading == true) {
+          final error = state.authError;
+          if (error != null) {
+            showFirebaseErrorDialog(context: context, authError: error);
+          }
+           else if (state.isLoading == true) {
             showDialog(
               context: context,
               builder: (context) => Center(
                 child: CircularProgressIndicator(),
               ),
             );
-          } else if (state.authError != null) {
-            showFirebaseErrorDialog(
-                context: context, authError: state.authError!);
           }
 
           if (!state.isLoading) {

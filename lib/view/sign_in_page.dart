@@ -3,13 +3,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qol_ber/auth/bloc/auth_bloc.dart';
 import 'package:qol_ber/auth/bloc/auth_event.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final passwordController = TextEditingController();
-    final emailController = TextEditingController();
+
 
     return Scaffold(
       body: SafeArea(

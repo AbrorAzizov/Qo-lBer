@@ -12,6 +12,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(child: Text('hello'),),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+
+      },child: Icon(Icons.add),),
     );
   }
 }

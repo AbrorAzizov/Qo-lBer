@@ -3,13 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qol_ber/auth/bloc/auth_bloc.dart';
 import 'package:qol_ber/auth/bloc/auth_event.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
+
   const SignupPage({super.key});
 
   @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+
+
+class _SignupPageState extends State<SignupPage> {
+  final nameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    passwordController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    final passwordController = TextEditingController();
-    final emailController = TextEditingController();
+
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -43,6 +64,7 @@ class SignupPage extends StatelessWidget {
               Column(
                 children: <Widget>[
                   TextField(
+                    controller: nameController,
                     decoration: InputDecoration(
                         hintText: "Username",
                         border: OutlineInputBorder(
@@ -62,7 +84,7 @@ class SignupPage extends StatelessWidget {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(18),
                             borderSide: BorderSide.none),
-                        fillColor: Colors.purple,
+                        fillColor: Colors.purple.withOpacity(0.1),
                         filled: true,
                         prefixIcon: const Icon(Icons.email)),
                   ),
@@ -76,7 +98,7 @@ class SignupPage extends StatelessWidget {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none),
-                      fillColor: Colors.purple,
+                      fillColor: Colors.purple.withOpacity(0.1),
                       filled: true,
                       prefixIcon: const Icon(Icons.lock),
                     ),
@@ -91,7 +113,7 @@ class SignupPage extends StatelessWidget {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none),
-                      fillColor: Colors.purple,
+                      fillColor: Colors.purple.withOpacity(0.1),
                       filled: true,
                       prefixIcon: const Icon(Icons.lock_open),
                     ),
@@ -104,9 +126,10 @@ class SignupPage extends StatelessWidget {
 
                   child: ElevatedButton(
                     onPressed: () {
+                      final name = nameController.text;
                       final password = passwordController.text;
                       final email = emailController.text;
-                      context.read<AuthBloc>().add(AuthEventSignUp(password: password, email: email));
+                      context.read<AuthBloc>().add(AuthEventSignUp(password: password, email: email,name: name));
                     },
                     style: ElevatedButton.styleFrom(
                       shape: const StadiumBorder(),
@@ -115,7 +138,7 @@ class SignupPage extends StatelessWidget {
                     ),
                     child: const Text(
                       "Sign up",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20,color: Colors.white),
                     ),
                   )
               ),
