@@ -5,50 +5,44 @@ import '../auth_error.dart';
 
 Future<void> showFirebaseErrorDialog({
   required BuildContext context,
-  required AuthError authError
+  required AuthError authError,
 }) {
-  return showGeneralDialog<bool>(
+  return showGeneralDialog<void>(
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: false,
+    barrierLabel: 'Error',              // ✅ Обязательно!
+    barrierColor: Colors.black54,       // (опционально затемнение)
     transitionDuration: const Duration(milliseconds: 200),
-    pageBuilder: (context, animation, secondaryAnimation) {
-      return Center(
-        child: Material(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 300),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    authError.dialogTitle,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    pageBuilder: (_, __, ___) => Center(
+      child: Material(
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 300),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  authError.dialogTitle,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
+                Text(authError.dialogText),
+                const SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+                    child: const Text('OK', style: TextStyle(color: Colors.red)),
                   ),
-                  SizedBox(height: 12),
-                  Text(authError.dialogText,
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text(
-                          'Ok',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),
-      );
-    },
+      ),
+    ),
   );
 }
