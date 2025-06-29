@@ -1,3 +1,4 @@
+
 import 'package:flutter/foundation.dart' show immutable;
  @immutable
 
@@ -23,3 +24,6 @@ class AuthEventGoToSignIn extends AuthEvent{}
 
 @immutable
 class AuthEventGoToSignUp extends AuthEvent{}
+
+class AuthEventInitialize extends AuthEvent {}
+
