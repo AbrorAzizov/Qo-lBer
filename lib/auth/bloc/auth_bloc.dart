@@ -13,21 +13,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEventGoToSignIn>(_goToSignIn);
     on<AuthEventInitialize>(_initialize);
   }
-
-  Future <void> _initialize(
-      AuthEventInitialize event,
-      Emitter<AuthState> emit) async{
-    final user = FirebaseAuth.instance.currentUser;
-    if(user == null){
-      emit(AuthStateRegistering(isLoading: false));
-    }else {
-      emit(AuthStateLoggedIn(isLoading: false, user: user));
-    }
   }
 
 
+Future<void> _initialize(
+    AuthEventInitialize event,
+    Emitter<AuthState> emit,
+    ) async {
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user == null) {
+      emit(AuthStateLoggedOut(isLoading: false));
+    } else {
+      emit(AuthStateLoggedIn(isLoading: false, user: user));
+    }
+  }
+  );
 }
-
 void _goToSignUp(AuthEventGoToSignUp event, Emitter<AuthState> emit) {
   emit(AuthStateRegistering(isLoading: false));
 }
@@ -57,7 +58,7 @@ Future<void> _onSignUp(AuthEventSignUp event,
       'uid': user.uid,
       'email': user.email,
       'name': event.name,
-      'created_at': Timestamp.now()
+      'created_at': Timestamp.now(),
     });
 
     emit(AuthStateLoggedIn(isLoading: false, user: user));

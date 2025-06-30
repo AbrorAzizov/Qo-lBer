@@ -12,28 +12,24 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-
-  runApp(
-    BlocProvider(
-      create: (context) {
-        final bloc = AuthBloc();
-        bloc.add(AuthEventInitialize());
-        return bloc;
-      },
-      child: const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return BlocProvider<AuthBloc>(
+      create: (context) {
+        final bloc = AuthBloc();
+        bloc.add(AuthEventInitialize());
+        return bloc;
+      },
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const AuthView(),
+        home: AuthView(),
+      ),
     );
   }
 }

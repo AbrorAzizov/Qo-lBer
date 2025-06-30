@@ -10,8 +10,8 @@ Future<void> showFirebaseErrorDialog({
   return showGeneralDialog<void>(
     context: context,
     barrierDismissible: false,
-    barrierLabel: 'Error',              // ✅ Обязательно!
-    barrierColor: Colors.black54,       // (опционально затемнение)
+    barrierLabel: 'Error',
+    barrierColor: Colors.black54,
     transitionDuration: const Duration(milliseconds: 200),
     pageBuilder: (_, __, ___) => Center(
       child: Material(
