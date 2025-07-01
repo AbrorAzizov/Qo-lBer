@@ -6,14 +6,14 @@ import 'package:qol_ber/profile/bloc/profile_cubit.dart';
 import 'package:qol_ber/profile/components/drawer_tile.dart';
 
 class DrawerMenu extends StatelessWidget {
-
-  const DrawerMenu({super.key});
+  final String uid ;
+  const DrawerMenu({super.key, required this.uid});
 
 
   @override
   Widget build(BuildContext context) {
-    final authBloc  =   context.read<AuthBloc>();
-    final AppUser? = authBloc.
+    final profileCubit  =   context.read<ProfileCubit>();
+    final AppUser? = profileCubit.state.
     return Drawer(
       child: SafeArea(child: Column(
         children: [
