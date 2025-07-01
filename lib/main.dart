@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qol_ber/auth/bloc/auth_event.dart';
 import 'package:qol_ber/firebase_options.dart';
+import 'package:qol_ber/profile/bloc/profile_cubit.dart';
+import 'package:qol_ber/profile/data/firebase_profile_repo.dart';
 import 'package:qol_ber/view/auth_view.dart';
 import 'package:qol_ber/auth/bloc/auth_bloc.dart';
 
@@ -20,12 +22,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
-      create: (context) {
-        final bloc = AuthBloc();
-        bloc.add(AuthEventInitialize());
-        return bloc;
-      },
+    final profileRepo = FireBaseProfileRepo();
+    return MultiBlocProvider(providers: [
+      BlocProvider<AuthBloc>(
+        create: (context) {
+          final bloc = AuthBloc();
+          bloc.add(AuthEventInitialize());
+          return bloc;
+        },),
+      BlocProvider<ProfileCubit>(
+        create: (context) => ProfileCubit(profileRepo: profileRepo),
+      )
+
+    ],
+
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: AuthView(),

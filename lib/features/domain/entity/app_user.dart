@@ -32,4 +32,18 @@ class AppUser {
       createdAt: json['created_at'] ?? Timestamp.now(),
     );
   }
+
+  AppUser copyWith({
+    String? uid,
+    String? email,
+    String? name,
+    Timestamp? createdAt,
+  }) {
+    return AppUser(
+      uid: uid ?? this.uid,
+      email: email ?? this.email,
+      name: name ?? this.name,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
 }

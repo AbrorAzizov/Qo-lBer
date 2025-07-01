@@ -20,15 +20,14 @@ Future<void> _initialize(
     AuthEventInitialize event,
     Emitter<AuthState> emit,
     ) async {
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (user == null) {
-      emit(AuthStateLoggedOut(isLoading: false));
-    } else {
-      emit(AuthStateLoggedIn(isLoading: false, user: user));
-    }
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) {
+    emit(AuthStateLoggedOut(isLoading: false));
+  } else {
+    emit(AuthStateLoggedIn(isLoading: false, user: user));
   }
-  );
 }
+
 void _goToSignUp(AuthEventGoToSignUp event, Emitter<AuthState> emit) {
   emit(AuthStateRegistering(isLoading: false));
 }
