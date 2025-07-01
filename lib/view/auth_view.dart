@@ -8,8 +8,14 @@ import '../auth/bloc/auth_bloc.dart';
 import '../auth/dialog/firebase_error_dialog.dart';
 import 'home_page.dart';
 
-class AuthView extends StatelessWidget {
+class AuthView extends StatefulWidget {
   const AuthView({super.key});
+
+  @override
+  State<AuthView> createState() => _AuthViewState();
+}
+
+class _AuthViewState extends State<AuthView> {
   @override
   Widget build(context) {
     return  BlocConsumer<AuthBloc, AuthState>(

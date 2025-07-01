@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qol_ber/auth/bloc/auth_bloc.dart';
+import 'package:qol_ber/auth/bloc/auth_state.dart';
 import 'package:qol_ber/profile/bloc/profile_state.dart';
 import 'package:qol_ber/profile/bloc/profile_cubit.dart';
 import 'package:qol_ber/profile/components/drawer_menu.dart';
@@ -17,7 +19,12 @@ class _HomePageState extends State<HomePage> {
     @override
     void inItState (){
       super.initState;
-      context.read<ProfileCubit>().fetchUser(uid);
+      final authState = context.read<AuthBloc>().state;
+      if(authState is AuthStateLoggedIn){
+        final uid = authState.user.uid;
+        context.read<ProfileCubit>().fetchUser(uid);
+      }
+
     }
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
@@ -27,8 +34,11 @@ class _HomePageState extends State<HomePage> {
           return Center(child: Text(state.error));
         } else if (state is ProfileStateLoaded) {
           return Scaffold(
-            appBar: AppBar(),
-            drawer: DrawerMenu(uid: state.user.uid),
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(state.user.email),
+            ),
+
             body: const Center(child: Text('hello')),
             floatingActionButton: FloatingActionButton(
               onPressed: () {},
@@ -36,7 +46,7 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         } else {
-          return const SizedBox(); // или заглушка
+          return const SizedBox();
         }
       },
     );
