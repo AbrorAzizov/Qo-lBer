@@ -34,9 +34,7 @@ class _AuthViewState extends State<AuthView> {
             );
           }
 
-          if (!state.isLoading) {
-            Navigator.of(context, rootNavigator: true).pop();
-          }
+
         },
 
         builder: (context, state) {
