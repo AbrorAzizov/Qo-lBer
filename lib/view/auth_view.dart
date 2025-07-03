@@ -6,7 +6,7 @@ import 'package:qol_ber/view/sign_up_page.dart';
 
 import '../auth/bloc/auth_bloc.dart';
 import '../auth/dialog/firebase_error_dialog.dart';
-import 'home_page.dart';
+import 'profile_page.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({super.key});

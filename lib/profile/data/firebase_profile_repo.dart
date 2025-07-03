@@ -30,7 +30,7 @@ class FireBaseProfileRepo extends ProfileRepo {
         email: data['email'] ?? '',
         name: data['name'] ?? '',
         createdAt: data['created_at'],
-
+        bio: data['bio']?? ''
 
 
       );

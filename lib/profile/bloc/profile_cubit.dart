@@ -40,7 +40,13 @@ class ProfileCubit extends Cubit<ProfileState> {
 
      await profileRepo.updateProfile(updatedProfile);
 
-     await profileRepo.fetchUserProfile(uid);
+     final refreshedUser = await profileRepo.fetchUserProfile(uid);
+     if (refreshedUser != null) {
+       emit(ProfileStateLoaded(user: refreshedUser));
+     } else {
+       emit(ProfileStateError(error: 'Failed to reload updated user'));
+     }
+;
    } catch (e){
      emit(ProfileStateError(error: 'error: $e'));
    }
