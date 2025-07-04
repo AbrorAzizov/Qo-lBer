@@ -2,10 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qol_ber/profile/bloc/profile_state.dart';
 import 'package:qol_ber/profile/repository/profile_repo.dart';
 
+import '../../features/storage/repo/storage_repo.dart';
+
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileRepo profileRepo;
-
-  ProfileCubit({required this.profileRepo}) : super(ProfileStateInitial());
+  StorageRepo storageRepo;
+  ProfileCubit({required this.profileRepo, required this.storageRepo}) : super(ProfileStateInitial());
 
   Future<void> fetchUser(String uid) async{
   emit(ProfileStateLoading());
@@ -46,7 +48,7 @@ class ProfileCubit extends Cubit<ProfileState> {
      } else {
        emit(ProfileStateError(error: 'Failed to reload updated user'));
      }
-;
+
    } catch (e){
      emit(ProfileStateError(error: 'error: $e'));
    }
